@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
 
 var config = require('./config');
 var data = require('./data');
-var routes = require('./api/routes');
+var routes = require('./routes');
 
 data.init(config);
 
