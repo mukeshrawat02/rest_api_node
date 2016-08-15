@@ -1,59 +1,95 @@
-﻿var User = function (mongoose) {
+﻿(function (userController) {
 
-    var bcrypt = require('bcrypt-nodejs');
-    // Create a password salt
-    var salt = bcrypt.genSaltSync(10);
+    var User = require('../../models').User;
 
-    // Define our user schema
-    var UserSchema = new mongoose.Schema({
-        name: { type: String, required: true },
-        email: { type: String, required: true, unique: true },
-        mobile: Number,
-        username: { type: String, required: true, unique: true },
-        password: {
-            type: String, required: true, select: false // do not select in query by default
-        },
-        dob: Date,
-        created_at: { type: Date, default: Date.now() },
-        updated_at: Date
-    });
+    // POST /api/signup
+    userController.register = function (req, res) {
+        var user = new User();
+        user.name = req.body.name;
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        user.mobile = req.body.mobile;
+        user.dob = req.body.dob;
 
-    UserSchema.pre('save', function (next) {
-        var user = this;
-
-        // only hash the password if it has been modified (or is new)
-        if (!user.isModified('password')) return next();
-
-        // generate a salt
-        bcrypt.genSalt(10,
-            function (err, salt) {
-                if (err) return next(err);
-
-                // hash password with our new salt
-                bcrypt.hash(user.password,
-                    salt,
-                    null,
-                    function (err, hash) {
-                        if (err) return next(err);
-
-                        // override the cleartext password with the hashed one
-                        user.password = hash;
-                        next();
-                    });
+        // Save the user and check for errors
+        user.save(function (err) {
+            if (err) {
+                res.send(err);
+            }
+            res.json({
+                success: true,
+                message: 'User has been added!',
+                data: user
             });
-    });
-
-    // method to compare a given password with the database hash
-    UserSchema.methods.comparePassword = function (password, next) {
-        bcrypt.compare(password, this.password, function (err, isMatch) {
-            if (err) return next(err);
-
-            next(null, isMatch);
         });
     };
 
-    // Export the Mongoose model
-    return mongoose.model('User', UserSchema);
-};
+    // GET /api/users
+    userController.getUsers = function (req, res) {
+        User.find(function (err, users) {
+            if (err) {
+                res.send(err);
+            }
+            res.json({
+                success: true,
+                data: users
+            });
+        });
+    };
 
-module.exports = User;
+    // GET /api/user/:user_id
+    userController.getUser = function (req, res) {
+        User.findById(req.params.user_id, function (err, user) {
+            if (err) {
+                res.send(err);
+            }
+            res.json({
+                success: true,
+                data: user
+            });
+        });
+    };
+
+    // PUT /api/user/:user_id
+    userController.updateUser = function (req, res) {
+        User.findById(req.params.user_id, function (err, user) {
+            if (err) {
+                res.send(err);
+            }
+            // Update only data that exists in request
+            if (req.body.name) user.name = req.body.name;
+            if (req.body.email) user.email = req.body.email;
+            if (req.body.mobile) user.mobile = req.body.mobile;
+            if (req.body.dob) user.dob = req.body.dob;
+            if (req.body.username) user.username = req.body.username;
+            if (req.body.password) user.password = req.body.password;
+
+            user.updated_at = Date.now();
+
+            user.save(function (err) {
+                if (err) res.send(err);
+
+                res.json({
+                    success: true,
+                    message: 'User updated.',
+                    data: user
+                });
+            });
+        });
+    };
+
+    // DELETE /api/user/:user_id
+    userController.deleteUser = function (req, res) {
+        User.findByIdAndRemove(req.params.user_id, function (err) {
+            if (err) {
+                res.send(err);
+            }
+            res.json({
+                success: true,
+                message: 'User successfully removed!'
+            });
+        });
+    };
+
+})(module.exports);
