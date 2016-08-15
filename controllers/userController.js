@@ -1,5 +1,4 @@
 ﻿(function (userController) {
-
     var User = require('../models').User;
 
     // POST /api/signup
@@ -17,7 +16,11 @@
             if (err) {
                 res.send(err);
             }
-            res.json({ message: 'User has been added!', data: user });
+            res.json({
+                success: true,
+                message: 'User has been added!',
+                data: user
+            });
         });
     };
 
@@ -27,7 +30,10 @@
             if (err) {
                 res.send(err);
             }
-            res.json(users);
+            res.json({
+                success: true,
+                data: users
+            });
         });
     };
 
@@ -37,7 +43,10 @@
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            res.json({
+                success: true,
+                data: user
+            });
         });
     };
 
@@ -47,7 +56,6 @@
             if (err) {
                 res.send(err);
             }
-
             // Update only data that exists in request
             if (req.body.name) user.name = req.body.name;
             if (req.body.email) user.email = req.body.email;
@@ -57,23 +65,30 @@
             if (req.body.password) user.password = req.body.password;
 
             user.updated_at = Date.now();
-            
+
             user.save(function (err) {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({message: 'User updated!.'});
+                if (err) res.send(err);
+
+                res.json({
+                    success: true,
+                    message: 'User updated.',
+                    data: user
+                });
             });
         });
     };
 
     // DELETE /api/user/:user_id
     userController.deleteUser = function (req, res) {
-        User.findByIdAndRemove(req.params.user_id, function (err, user) {
+        User.findByIdAndRemove(req.params.user_id, function (err) {
             if (err) {
                 res.send(err);
             }
-            res.json({ message: 'User successfully removed!' });
+            res.json({
+                success: true,
+                message: 'User successfully removed!'
+            });
         });
     };
+
 })(module.exports);
