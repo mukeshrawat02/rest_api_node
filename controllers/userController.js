@@ -56,6 +56,8 @@
             if (req.body.username) user.username = req.body.username;
             if (req.body.password) user.password = req.body.password;
 
+            user.updated_at = Date.now();
+            
             user.save(function (err) {
                 if (err) {
                     res.send(err);

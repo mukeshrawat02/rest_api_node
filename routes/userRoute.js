@@ -7,6 +7,9 @@
         apiRouter.route('/signup')
                  .post(userController.register);
 
+        apiRouter.route('/login')
+                 .post(authenticationController.login);
+
         apiRouter.route('/users')
                  .get(userController.getUsers);
 
