@@ -1,8 +1,18 @@
 ﻿// call the packages we need
-var express = require('express');       //call express
+var express = require('express'),       //call express
+    bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    config = require('./config'),
+    data = require('./data'),
+    routes = require('./routes');
+
+data.init(config);
+
+// get an instance of the express Router
+var apiRoutes = express.Router();
+routes.init(apiRoutes);
+
 var app = express();                   //define our app using express
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -21,16 +31,6 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-var config = require('./config');
-var data = require('./data');
-var routes = require('./routes');
-
-data.init(config);
-
-// get an instance of the express Router
-var apiRoutes = express.Router();
-routes.init(apiRoutes);
 
 // register our routes -------------------------------
 // all of our routes will be prefixed with /api
