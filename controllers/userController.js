@@ -14,7 +14,7 @@
         // Save the user and check for errors
         user.save(function (err) {
             if (err) {
-                res.send(err);
+                res.status(500).send(err);
             }
             res.json({
                 success: true,
@@ -28,7 +28,7 @@
     userController.getUsers = function (req, res) {
         User.find(function (err, users) {
             if (err) {
-                res.send(err);
+                res.status(500).send(err);
             }
             res.json({
                 success: true,
@@ -41,7 +41,7 @@
     userController.getUser = function (req, res) {
         User.findById(req.params.user_id, function (err, user) {
             if (err) {
-                res.send(err);
+                res.status(500).send(err);
             }
             res.json({
                 success: true,
@@ -54,7 +54,7 @@
     userController.updateUser = function (req, res) {
         User.findById(req.params.user_id, function (err, user) {
             if (err) {
-                res.send(err);
+                res.status(500).send(err);
             }
             // Update only data that exists in request
             if (req.body.name) user.name = req.body.name;
@@ -67,8 +67,9 @@
             user.updated_at = Date.now();
 
             user.save(function (err) {
-                if (err) res.send(err);
-
+                if (err) {
+                    res.status(500).send(err);
+                }
                 res.json({
                     success: true,
                     message: 'User updated.',
@@ -82,7 +83,7 @@
     userController.deleteUser = function (req, res) {
         User.findByIdAndRemove(req.params.user_id, function (err) {
             if (err) {
-                res.send(err);
+                res.status(500).send(err);
             }
             res.json({
                 success: true,

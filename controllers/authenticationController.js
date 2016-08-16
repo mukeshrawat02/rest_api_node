@@ -8,7 +8,7 @@
             req.body.password,
             function (err, user, reason) {
                 if (err) {
-                    res.send(err);
+                    res.status(500).send(err);
                 }
 
                 // login was successful if we have a user
@@ -16,15 +16,13 @@
                     // handle login success
 
                     // creating jwt token
-                    var token = jwt.sign(
-                        {
-                            _id: user._id,
-                            username: user.username
-                        },
-                        req.app.get('jwtTokenSecret'),
-                        {
-                            expiresIn: 60 * 60 * 24 // expires in 24 hours
-                        });
+                    var token = jwt.sign({
+                        _id: user._id,
+                        username: user.username
+                    },
+                    req.app.get('jwtTokenSecret'), {
+                        expiresIn: 60 * 60 * 24 // expires in 24 hours
+                    });
 
                     // return the information including token as JSON
                     res.json({
