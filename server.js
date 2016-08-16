@@ -15,6 +15,8 @@ routes.init(apiRoutes);
 // define our app using express
 var app = express(); 
 
+app.set('jwtTokenSecret', config.secretKey);
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));

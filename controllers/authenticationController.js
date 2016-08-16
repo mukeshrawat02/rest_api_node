@@ -1,7 +1,6 @@
 ﻿(function (authenticationController) {
     var User = require('../models').User;
     var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-    var config = require('../config');
 
     authenticationController.login = function (req, res) {
         User.getAuthenticated(
@@ -16,9 +15,16 @@
                 if (user) {
                     // handle login success
 
-                    var token = jwt.sign(user, config.secretKey, {
-                        expiresInMinutes: 1440 // expires in 24 hours
-                    });
+                    // creating jwt token
+                    var token = jwt.sign(
+                        {
+                            _id: user._id,
+                            username: user.username
+                        },
+                        req.app.get('jwtTokenSecret'),
+                        {
+                            expiresIn: 60 * 60 * 24 // expires in 24 hours
+                        });
 
                     // return the information including token as JSON
                     res.json({
