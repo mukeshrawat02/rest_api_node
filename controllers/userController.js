@@ -57,12 +57,24 @@
                 res.status(500).send(err);
             }
             // Update only data that exists in request
-            if (req.body.name) user.name = req.body.name;
-            if (req.body.email) user.email = req.body.email;
-            if (req.body.mobile) user.mobile = req.body.mobile;
-            if (req.body.dob) user.dob = req.body.dob;
-            if (req.body.username) user.username = req.body.username;
-            if (req.body.password) user.password = req.body.password;
+            if (req.body.name) {
+                user.name = req.body.name;
+            }
+            if (req.body.email) {
+                user.email = req.body.email;
+            }
+            if (req.body.mobile) {
+                user.mobile = req.body.mobile;
+            }
+            if (req.body.dob) {
+                user.dob = req.body.dob;
+            }
+            if (req.body.username) {
+                user.username = req.body.username;
+            }
+            if (req.body.password) {
+                user.password = req.body.password;
+            }
 
             user.updated_at = Date.now();
 

@@ -1,8 +1,6 @@
 ﻿var User = function (mongoose) {
 
     var bcrypt = require('bcrypt-nodejs');
-    // Create a password salt
-    var salt = bcrypt.genSaltSync(10);
 
     // Define our user schema
     var UserSchema = new mongoose.Schema({
@@ -22,19 +20,25 @@
         var user = this;
 
         // only hash the password if it has been modified (or is new)
-        if (!user.isModified('password')) return next();
+        if (!user.isModified('password')) {
+            return next();
+        }
 
         // generate a salt
         bcrypt.genSalt(10,
             function (err, salt) {
-                if (err) return next(err);
+                if (err) {
+                    return next(err);
+                }
 
                 // hash password with our new salt
                 bcrypt.hash(user.password,
                     salt,
                     null,
                     function (err, hash) {
-                        if (err) return next(err);
+                        if (err) {
+                            return next(err);
+                        }
 
                         // override the cleartext password with the hashed one
                         user.password = hash;
@@ -46,7 +50,9 @@
     // method to compare a given password with the database hash
     UserSchema.methods.comparePassword = function (password, cb) {
         bcrypt.compare(password, this.password, function (err, isMatch) {
-            if (err) return cb(err);
+            if (err) {
+                return cb(err);
+            }
 
             cb(null, isMatch);
         });
@@ -62,7 +68,9 @@
     // getAuthenticated is a helper method to check username and password from the database and return the response
     UserSchema.statics.getAuthenticated = function (username, password, cb) {
         this.findOne({ username: username }, function (err, user) {
-            if (err) return cb(err);
+            if (err) {
+                return cb(err);
+            }
 
             // No user found with that username
             if (!user) {
@@ -71,7 +79,9 @@
 
             // Make sure the password is correct
             user.comparePassword(password, function (err, isMatch) {
-                if (err) return cb(err);
+                if (err) {
+                    return cb(err);
+                }
 
                 // password did not match
                 if (!isMatch) {

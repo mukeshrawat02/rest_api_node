@@ -13,7 +13,7 @@
         apiRouter.route('/users')
                  .get(userController.getUsers);
 
-        apiRouter.route('/user:user_id')
+        apiRouter.route('/user/:user_id')
                  .get(userController.getUser)
                  .put(userController.updateUser)
                  .delete(userController.deleteUser);

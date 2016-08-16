@@ -16,7 +16,7 @@ gulp.task('default', function () {
             ext: 'js',
             watch: ["server.js", "models/", "controllers/", 'routes/', 'data/', 'config/'],
             env: {
-                PORT: 8000
+                PORT: 9000
             },
             tasks: ['lint'],
             ignore: ['./node_modules/**']
