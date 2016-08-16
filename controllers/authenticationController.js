@@ -1,12 +1,9 @@
 ﻿(function (authenticationController) {
-    var User = require('../models').User;
-    var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+    var jwt = require('jsonwebtoken'),
+        User = require('../models').User;
 
     authenticationController.login = function (req, res) {
-        User.getAuthenticated(
-            req.body.username,
-            req.body.password,
-            function (err, user, reason) {
+        User.getAuthenticated(req.body.username, req.body.password, function (err, user, reason) {
                 if (err) {
                     res.status(500).send(err);
                 }

@@ -8,14 +8,13 @@ var express = require('express'),       //call express
 
 data.init(config);
 
+// define our app using express
+var app = express(); 
+app.set('jwtTokenSecret', config.secretKey);
+
 // get an instance of the express Router
 var apiRoutes = express.Router();
 routes.init(apiRoutes);
-
-// define our app using express
-var app = express(); 
-
-app.set('jwtTokenSecret', config.secretKey);
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -33,6 +32,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
 
 // register our routes -------------------------------
 // all of our routes will be prefixed with /api
