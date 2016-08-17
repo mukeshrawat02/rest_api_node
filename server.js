@@ -46,5 +46,6 @@ app.use(function (req, res, next) {
 });
 
 // start the server -------------------------------
-app.listen(config.port);
-console.log('Node Server is running on port ' + config.port);
+app.listen(config.port, function () {
+    console.log('Node Server is running on port ' + config.port)
+});
