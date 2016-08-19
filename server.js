@@ -33,7 +33,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
 // register our routes -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', apiRoutes);

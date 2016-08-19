@@ -1,10 +1,23 @@
 ﻿process.env.NODE_ENV = 'test';
 
-var should = require('should');
+var sinon = require('sinon'),
+    chai = require('chai'),
+    expect = chai.expect,
+    should = chai.should();
 
-describe('User API Test', function () {
-    it('Get User', function () {
-        should.equal("This shouldn't fail", "This shouldn't fail");
-        should.equal("This should fail", "This should fail");
-    })
-})
+describe('UserController Test', function () {
+    var user;
+    before(function () {
+        user = new User();
+    });
+
+    describe('Signup User', function () {
+
+        it('should be able to add user', function () {
+        });
+        it('should have unique user email', function () {
+        });
+        it('should return status 200', function () {
+        });
+    });
+});
