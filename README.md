@@ -10,3 +10,9 @@ Boilerplate for a RESTful API built on Node.js and Mongo
 - Gulp as a task runner.
 - Mocha as a test runner, Chai as Assertion Library and Sinon as a mocking framework
 
+# To-do
+- Add and complete unit test cases
+- Add integration test scenarios
+- Better test coverage
+
+
