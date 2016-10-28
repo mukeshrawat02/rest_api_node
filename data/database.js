@@ -2,22 +2,29 @@
     var mongoose = require('mongoose');
 
     database.init = function (config) {
-
-        var connectionString = "";
-
-        if (process.env.NODE_ENV == 'test') {
-            connectionString = config.testDatabase;
-        }
-        else {
-            connectionString = config.database;
-        }
-        console.log("Connection String: " + connectionString);
-        // connect to the database
-        mongoose.connect(connectionString, function (err) {
-            if (err) {
-                throw err;
-            }
-            console.log('Successfully connected to MongoDB');
+        console.log("Connection String: " + config.database);
+     
+        var options = { 
+            server: { 
+                socketOptions: { 
+                    keepAlive: 300000, 
+                    connectTimeoutMS: 30000 
+                } 
+            }, 
+            replset: { 
+                socketOptions: { 
+                    keepAlive: 300000,
+                    connectTimeoutMS : 30000 
+                } 
+            } 
+        };   
+        mongoose.connect(config.database, options);
+        
+        var conn = mongoose.connection;             
+        conn.on('error', console.error.bind(console, 'connection error:'));  
+        
+        conn.once('open', function() {
+            console.log('Successfully connected to MongoDB');                       
         });
     };
 

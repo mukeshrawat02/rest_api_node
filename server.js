@@ -49,7 +49,7 @@ app.listen(config.port, function (err) {
      if (err)
         console.error(err)
     else
-        console.log('Node Server is running on port ' + config.port)
+        console.log('Node '+ process.env.NODE_ENV +' Server is running on port ' + config.port)
 });
 
 if (process.env.NODE_ENV == 'production')
