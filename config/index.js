@@ -2,7 +2,7 @@
     var db;
     if (process.env.NODE_ENV === "development")
     {
-        db = 'mongodb://localhost/favLister';
+        db = 'mongodb://localhost/_mgit';
     }
     else
     {
