@@ -17,6 +17,18 @@ gulp.task('test', function () {
                .on('error', gutil.log); 
 });
 
+gulp.task('set-dev-node-env', function () {
+    return process.env.NODE_ENV = 'development';
+});
+
+gulp.task('set-prod-node-env', function () {
+    return process.env.NODE_ENV = 'production';
+});
+
+gulp.task('set-test-node-env', function () {
+    return process.env.NODE_ENV = 'test';
+});
+
 gulp.task('default', function () {
         nodemon({
             // the script to run the app
