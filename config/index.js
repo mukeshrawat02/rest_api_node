@@ -10,7 +10,7 @@
     }
     else
     {
-        db = 'mongodb://mprod:admin@123@ds031607.mlab.com:31607/_mgit';
+        db = 'mongodb://sa:admin@ds139197.mlab.com:39197/_mgit';
     }
     config.database = db;
     config.secretKey = '12qwaszx!£';
