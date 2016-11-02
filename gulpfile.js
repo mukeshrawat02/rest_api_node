@@ -4,19 +4,6 @@
     gulpMocha = require('gulp-mocha'),
     gutil = require('gulp-util');
 
-
-gulp.task('lint', function () {
-    return gulp.src(['./*.js', './*/*.js', './*/*/*.js'])
-               .pipe(jshint())
-               .pipe(jshint.reporter('jshint-stylish'));
-});
-
-gulp.task('mocha', function () {
-    return gulp.src('tests/*.js', { read: false })
-               .pipe(gulpMocha({ reporter: 'list' }))
-               .on('error', gutil.log); 
-});
-
 gulp.task('set-dev-node-env', function () {
     return process.env.NODE_ENV = 'development';
 });
@@ -27,6 +14,12 @@ gulp.task('set-prod-node-env', function () {
 
 gulp.task('set-test-node-env', function () {
     return process.env.NODE_ENV = 'test';
+});
+
+gulp.task('lint', function () {
+    return gulp.src(['./*.js', './*/*.js', './*/*/*.js'])
+               .pipe(jshint())
+               .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('dev', ['set-dev-node-env'], function () {
@@ -45,31 +38,27 @@ gulp.task('dev', ['set-dev-node-env'], function () {
         });
 });
 
-gulp.task('test', ['set-test-node-env'], function () {
-        nodemon({
-            script: 'server.js',
-            ext: 'js',
-            watch: ["server.js", "tests/**"],
-            env: {
-                PORT: 8000
-            },
-            tasks: ['mocha'],
-            ignore: ['./node_modules/**']
-        }).on('restart', function () {
-            console.log('Node Test Server restarted!');
-        });
+gulp.task('test', ['set-test-node-env' ,'mocha'], function () {
+    gulp.watch(['tests/**'], ['mocha']);
+});
+
+gulp.task('mocha', function () {
+    return gulp.src('tests/*.js', { read: false })
+               .pipe(gulpMocha({ reporter: 'list' }))
+               .on('error', gutil.log); 
 });
 
 gulp.task('prod', ['set-prod-node-env'], function () {
-        nodemon({
-            script: 'server.js',
-            ext: 'js',
-            env: {
-                PORT: 8000
-            },
-            watch: ["server.js"],
-            ignore: ['./node_modules/**']
-        }).on('restart', function () {
+     nodemon({
+         script: 'server.js',
+         ext: 'js',
+         env: {
+               PORT: 8000
+         },
+         watch: ["server.js"],
+         ignore: ['./node_modules/**']
+    })
+    .on('restart', function () {
             console.log('Node Prod Server restarted!');
-        });
+     });
 });

@@ -1,6 +1,4 @@
-﻿process.env.NODE_ENV = 'test';
-
-var sinon = require('sinon'),
+﻿var sinon = require('sinon'),
     chai = require('chai'),
     expect = chai.expect,
     should = chai.should();
@@ -11,7 +9,7 @@ describe('UserController Test', function () {
         user = new User();
     });
 
-    describe('Signup User', function () {
+    describe('Signup user', function () {
 
         it('should be able to add user', function () {
         });
