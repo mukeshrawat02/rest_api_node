@@ -8,11 +8,13 @@ Boilerplate for a RESTful API built on Node.js and Mongo
 - Token based authentication
 - JOT (JSON Web Tokens) for tokens
 - Gulp as a task runner.
-- Mocha as a test runner, Chai as Assertion Library and Sinon as a mocking framework
+- Mocha as a testing framework and runner, Chai as Assertion Library and Sinon as a mocking framework
 
 # To-do
 - Add and complete unit test cases
 - Add integration test scenarios
 - Better test coverage
+- Add Auth0 as an Authentication as a Service
+- Deploy to heroku
 
 
