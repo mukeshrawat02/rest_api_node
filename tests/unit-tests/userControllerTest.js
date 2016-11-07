@@ -1,21 +1,31 @@
 ﻿var sinon = require('sinon'),
     chai = require('chai'),
     expect = chai.expect,
-    should = chai.should();
+    should = chai.should(),
+    userController = require("../../controllers/userController"),
+    User = require('../../models').User;
 
 describe('UserController Test', function () {
     var user;
     before(function () {
         user = new User();
     });
-
-    describe('Signup user', function () {
-
-        it('should be able to add user', function () {
+    
+    describe("Register users", function(){
+        // TEST will pass if we call the method once
+        it("should call register user once", function(done){
+            var req,res,spy;
+            req = res = {};
+            spy = res.send = sinon.spy();
+            userController.register(req, res);
+            expect(spy.calledOnce).to.equal(true);
+            done();
         });
-        it('should have unique user email', function () {
-        });
-        it('should return status 200', function () {
+
+        // Test will pass if we fail to get a user
+        it("should return error", function(done){
+            
+            done();
         });
     });
 });

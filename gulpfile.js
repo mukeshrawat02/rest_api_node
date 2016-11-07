@@ -43,8 +43,8 @@ gulp.task('test', ['set-test-node-env' ,'mocha'], function () {
 });
 
 gulp.task('mocha', function () {
-    return gulp.src('tests/*.js', { read: false })
-               .pipe(gulpMocha({ reporter: 'list' }))
+    return gulp.src('tests/**/*.js', { read: false })
+               .pipe(gulpMocha({ reporter: 'spec' }))
                .on('error', gutil.log); 
 });
 
