@@ -25,6 +25,7 @@
     "jshint": "*",
     "jshint-stylish": "*",
     "mocha": "*",
-    "sinon": "*"
+    "sinon": "*",
+    "supertest": "^2.0.1"
   }
 }

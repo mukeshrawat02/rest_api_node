@@ -28,9 +28,14 @@ app.use(morgan('dev'));
 app.use(function (req, res, next) {
     // CORS headers
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
-    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+    res.header("Access-Control-Allow-Methods", 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Access-Control-Request-Headers, Access-Control-Request-Method, X-Requested-With, Content-Type, x-access-token");
+    if ('OPTIONS' === req.method) {
+        res.sendStatus(200);
+    }
+    else {
+        next();
+    }
 });
 
 // register our routes -------------------------------

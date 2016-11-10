@@ -23,23 +23,34 @@ gulp.task('lint', function () {
 });
 
 gulp.task('dev', ['set-dev-node-env'], function () {
-        nodemon({
-            // the script to run the app
-            script: 'server.js',
-            ext: 'js',
-            watch: ["server.js", "models/", "controllers/", 'routes/', 'data/', 'config/'],
-            env: {
-                PORT: 9000
-            },
-            tasks: ['lint'],
-            ignore: ['./node_modules/**']
-        }).on('restart', function () {
+    nodemon({
+        script: 'server.js',
+        ext: 'js',
+        watch: ["server.js", "models/", "controllers/", 'routes/', 'data/', 'config/'],
+        env: {
+               PORT: 9000
+        },
+        tasks: ['lint'],
+        ignore: ['./node_modules/**']
+    }).on('restart', function () {
             console.log('Node Dev Server restarted!');
-        });
+    });
 });
 
-gulp.task('test', ['set-test-node-env' ,'mocha'], function () {
-    gulp.watch(['tests/**'], ['mocha']);
+gulp.task('test', ['set-test-node-env'], function () {
+    nodemon({
+         script: 'server.js',
+         ext: 'js',
+         env: {
+               PORT: 3000
+         },
+         tasks: ['mocha'],
+         watch: ['tests/**'],
+         ignore: ['./node_modules/**']
+     })
+     .on('restart', function () {
+            console.log('Node Test Server restarted!');
+     });
 });
 
 gulp.task('mocha', function () {

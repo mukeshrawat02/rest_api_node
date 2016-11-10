@@ -4,13 +4,24 @@
     // POST /api/signup
     userController.register = function (req, res) {
         var user = new User();
-        user.name = req.body.name;
-        user.username = req.body.username;
-        user.email = req.body.email;
-        user.password = req.body.password;
-        user.mobile = req.body.mobile;
-        user.dob = req.body.dob;
-
+        if (req.body.name) {
+             user.name = req.body.name;
+        }
+        if (req.body.email) {
+             user.email = req.body.email;
+        }
+        if (req.body.mobile) {
+             user.mobile = req.body.mobile;
+        }
+        if (req.body.dob) {
+             user.dob = req.body.dob;
+        }
+        if (req.body.username) {
+             user.username = req.body.username;
+        }
+        if (req.body.password) {
+             user.password = req.body.password;
+        }
         // Save the user and check for errors
         user.save(function (err) {
             if (err) {
